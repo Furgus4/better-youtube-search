@@ -1,18 +1,24 @@
-// Wait for the bar with chips to appear before starting
+// if the user loads on a page that Isn't the search page
+// this code will run anyway
+// then when they search for something, YouTube does not reload
+// that means I need another observer to tell when YouTube
+// changes to the search screen before this code can run
+
+// I should also probably make all the initial observer thingies
+// a separate file from the main function
+
+
 const chipBarPath = "ytd-app > div#content > ytd-page-manager > ytd-search > div#container > div#header > ytd-search-header-renderer";
-
-const observerTarget = document.querySelector("ytd-app");
+const chipBar = document.querySelector("ytd-app");
 const config = { childList: true, subtree: true }
-
 const observationCallback = (mutationList, observer) => {
   if (document.querySelector(chipBarPath) !== null) {
     observer.disconnect();
     main();
   }
 }
-
-const observer = new MutationObserver(observationCallback);
-observer.observe(observerTarget, config);
+const chipObserver = new MutationObserver(observationCallback);
+chipObserver.observe(chipBar, config);
 
 function main() {
   let toolbar = document.querySelector(chipBarPath);
