@@ -1,11 +1,11 @@
-// if the user loads on a page that Isn't the search page
-// this code will run anyway
-// then when they search for something, YouTube does not reload
-// that means I need another observer to tell when YouTube
-// changes to the search screen before this code can run
+// If the user loads on a page that isn't the search page,
+// when they search for something, YouTube won't reload.
 
-// I should also probably make all the initial observer thingies
-// a separate file from the main function
+// This means I need another observer to tell when YouTube
+// changes to the search screen so this code knows to run
+
+// I should also probably put all the initial observers in a
+// separate file from the main function
 
 
 const chipBarPath = "ytd-app > div#content > ytd-page-manager > ytd-search > div#container > div#header > ytd-search-header-renderer";
