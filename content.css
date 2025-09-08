@@ -1,9 +1,22 @@
-/* test */
-.toolbar {
-    border: red 1px dashed;
-    width: 600px;
-    height: 100px;
+#duration-and-views {
+    background: #303030;
+    color: white;
+    border: 1px rgba(255, 255, 255, 0.2) solid;
+    border-radius: 8px;
+
+    width: 167px;
+    height: 40px;
     position: absolute;
-    background-color: limegreen;
-    top: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: Roboto, serif;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+
+    user-select: none;
 }
+
