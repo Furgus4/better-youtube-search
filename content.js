@@ -59,11 +59,35 @@ function main() {
     // but that seems convoluted so for now I'll just scrape the html
 
     // I'll eventually need an observer to filter videos as they load
-    const videos = document.querySelector("ytd-search.style-scope.ytd-page-manager > div#container > ytd-two-column-search-results-renderer > div#primary > ytd-section-list-renderer > div#contents");
-    console.log(videos);
-    // for each ytd-item-section-renderer
-    // check duration of each ytd-video-renderer in div#contents
 
-    console.log("hiding videos that don't fit criteria");
+    const videoDisplayArea = document.querySelector("ytd-search.style-scope.ytd-page-manager > div#container > ytd-two-column-search-results-renderer > div#primary > ytd-section-list-renderer > div#contents");
+
+    for (const child of videoDisplayArea.children) {
+      console.log(child.tagName);
+      if (child.tagName === "YTD-ITEM-SECTION-RENDERER") {
+        // check duration of each ytd-video-renderer in div#contents
+        console.log("here are the videos (potentially)");
+        const videoList = child.querySelector("div#contents");
+        for (const potentialVideo of videoList.children) {
+          // ytd-video-renderer is a video
+          // yt-lockup-view-model is a playlist
+          // ytd-ad-slot-renderer is probably an ad, (test without adblocker)
+          // grid-shelf-view-model has shorts in it I think
+
+          // right now just do videos
+          if (potentialVideo.tagName === "YTD-VIDEO-RENDERER") {
+            // right now this also gets SHORTS as a duration,
+            // ill probably need to find some other way to get the duration consistently
+            // I don't really want to make api calls though
+            const duration = potentialVideo.querySelector("div.yt-badge-shape__text").textContent;
+            console.log(duration);
+            // convert duration to minutes with math and string stuff
+            // if it's not SHORTS check if it fits in the min-max variables
+          }
+        }
+      }
+    }
   }
 }
+
+// All dropdowns and their functionality will get their own file
