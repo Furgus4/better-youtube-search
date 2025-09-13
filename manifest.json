@@ -1,6 +1,6 @@
 {
 	"manifest_version": 3,
-	"name": "test",
+	"name": "better-youtube-search",
 	"version": "1.0",
 	"description": "",
 	"icons": {
@@ -8,8 +8,16 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["*://www.youtube.com/results*"],
-			"js": ["content.js"],
+			"matches": ["https://www.youtube.com/*"],
+			"js": [
+				"content.js",
+				"dropdown-functionality/DurationAndViews.js",
+				"dropdown-functionality/KeywordsAndTags.js",
+				"dropdown-functionality/SortBy.js",
+				"dropdown-functionality/Type.js",
+				"dropdown-functionality/UploadDate.js",
+				"dropdown-functionality/View.js"
+			],
 			"css": ["content.css"]
 		}
 	],
