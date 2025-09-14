@@ -31,5 +31,12 @@ function toolbarInit(chipBarPath) {
   // loaded in manifest.json
   durationAndViewsSetup(toolbar);
 
-  // put an observer here that calls all the relevant functionalities as the videos load
+  // observer that calls all the relevant functionalities as the videos load
+  const vda = document.querySelector("ytd-search.style-scope.ytd-page-manager > div#container > ytd-two-column-search-results-renderer > div#primary > ytd-section-list-renderer > div#contents");
+  const vdaObserver = new MutationObserver(tempName);
+  function tempName(mutationList, observer) {
+    durationAndViewsFunctionality();
+  }
+  const vdaConfig = { childList: true, subtree: true }
+  vdaObserver.observe(vda, vdaConfig);
 }

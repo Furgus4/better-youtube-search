@@ -21,8 +21,7 @@ function durationAndViewsSetup(toolbar) {
     } else if (davDropdown.style.display === "flex") {
       davDropdown.style.display = "none";
 
-      // consider calling this on blur of the input fields instead of here
-      console.log("hiding videos");
+      // call this on blur of the input fields instead of here
       durationAndViewsFunctionality();
     }
   });
@@ -32,8 +31,9 @@ function durationAndViewsFunctionality() {
   const min = document.getElementById("duration-min").value;
   const max = document.getElementById("duration-max").value;
 
-  console.log("min: " + min);
-  console.log("max: " + max);
+  if (min === "" || max === "") {
+    return;
+  }
 
   const videoDisplayArea = document.querySelector("ytd-search.style-scope.ytd-page-manager > div#container > ytd-two-column-search-results-renderer > div#primary > ytd-section-list-renderer > div#contents");
 
@@ -41,28 +41,37 @@ function durationAndViewsFunctionality() {
     if (child.tagName === "YTD-ITEM-SECTION-RENDERER") {
       const videoList = child.querySelector("div#contents");
       for (const potentialVideo of videoList.children) {
-        // ytd-video-renderer is a video
-        // yt-lockup-view-model is a playlist
-        // ytd-ad-slot-renderer is probably an ad, (test without adblocker)
-        // grid-shelf-view-model has shorts in it I think
+
+        // TEMPORARY TEST
+        if (potentialVideo.tagName === "YT-LOCKUP-VIEW-MODEL" || potentialVideo.tagName === "GRID-SHELF-VIEW-MODEL" || potentialVideo.tagName === "YTD-CHANNEL-RENDERER") {
+          potentialVideo.remove();
+        }
 
         if (potentialVideo.tagName === "YTD-VIDEO-RENDERER") {
-          // right now this also gets SHORTS as a duration,
-          // ill probably need to find some other way to get the duration consistently
-          // I don't really want to make api calls though
-
+          // textContext is sometimes null here for some reason, I should probably look into that
           const duration = potentialVideo.querySelector("div.yt-badge-shape__text").textContent;
 
-          // consider web crawling to the watch page to collect the duration for shorts
-          // this currently hides all shorts automatically which is bad
+          // duration gets "SHORTS" for shorts, which is bad
+          // I don't want to make api calls though
+          // consider web crawling to collect duration for shorts (if that's allowed)
+
+          // TEMPORARY
           if (duration === "SHORTS") {
+            // actually get short duration here
+            console.log("temporarily hiding a short because I'm lazy");
             potentialVideo.remove(); //potentialVideo.hidden = true;
           }
 
-          let minutes = +duration.split(":")[0];
-          if (minutes < min || minutes > max) { // not entirely accurate because of unaccounted seconds
+          // doesn't work for hour-long videos
+          // will probably use a separate function to do this
+          let minutes = +duration.split(":")[0] + (+duration.split(":")[1] / 60);
+
+          if (minutes < min || minutes > max) {
             potentialVideo.remove(); //potentialVideo.hidden = true;
           }
+
+          // in the future, I'll just hide videos
+          // then I can unhide them as the filters change
         }
       }
     }
