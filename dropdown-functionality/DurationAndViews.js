@@ -33,6 +33,9 @@ function durationAndViewsFunctionality() {
 
   if (min === "" || max === "") {
     return;
+  } else {
+    // format min and max into seconds here if they weren't already in seconds
+    // ... (can't do this until UI is more complete)
   }
 
   const videoDisplayArea = document.querySelector("ytd-search.style-scope.ytd-page-manager > div#container > ytd-two-column-search-results-renderer > div#primary > ytd-section-list-renderer > div#contents");
@@ -42,7 +45,7 @@ function durationAndViewsFunctionality() {
       const videoList = child.querySelector("div#contents");
       for (const potentialVideo of videoList.children) {
 
-        // TEMPORARY TEST
+        // declutter for testing
         if (potentialVideo.tagName === "YT-LOCKUP-VIEW-MODEL" || potentialVideo.tagName === "GRID-SHELF-VIEW-MODEL" || potentialVideo.tagName === "YTD-CHANNEL-RENDERER") {
           potentialVideo.remove();
         }
@@ -51,29 +54,35 @@ function durationAndViewsFunctionality() {
           // textContext is sometimes null here for some reason, I should probably look into that
           const duration = potentialVideo.querySelector("div.yt-badge-shape__text").textContent;
 
-          // duration gets "SHORTS" for shorts, which is bad
-          // I don't want to make api calls though
-          // consider web crawling to collect duration for shorts (if that's allowed)
-
-          // TEMPORARY
           if (duration === "SHORTS") {
-            // actually get short duration here
+            // sketchy reverse engineering and JSON stuff that actually gets a duration
+
             console.log("temporarily hiding a short because I'm lazy");
             potentialVideo.remove(); //potentialVideo.hidden = true;
           }
 
-          // doesn't work for hour-long videos
-          // will probably use a separate function to do this
-          let minutes = +duration.split(":")[0] + (+duration.split(":")[1] / 60);
+          let seconds = getSecondsFromDuration(duration);
 
-          if (minutes < min || minutes > max) {
+          // Temporary
+          if (seconds <= min*60 || seconds >= max*60) {
             potentialVideo.remove(); //potentialVideo.hidden = true;
           }
 
-          // in the future, I'll just hide videos
-          // then I can unhide them as the filters change
+          // should I reload when filters change?
+          // or should I just unhide certain videos
+          // where would this even happen?
         }
       }
     }
+  }
+
+  function getSecondsFromDuration(d) {
+    let result = 0;
+    let arr = d.split(":").reverse();
+
+    for (let i = 0; i < arr.length; i++) {
+      result += (+arr[i]) * (60 ** (i));
+    }
+    return result;
   }
 }
