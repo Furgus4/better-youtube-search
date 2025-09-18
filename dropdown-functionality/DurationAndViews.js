@@ -28,14 +28,18 @@ function durationAndViewsSetup(toolbar) {
 }
 
 function durationAndViewsFunctionality() {
-  const min = document.getElementById("duration-min").value;
-  const max = document.getElementById("duration-max").value;
+  let min = document.getElementById("duration-min").value;
+  let max = document.getElementById("duration-max").value;
 
   if (min === "" || max === "") {
     return;
   } else {
     // format min and max into seconds here if they weren't already in seconds
-    // ... (can't do this until UI is more complete)
+    // (can't do this until UI is more complete) ...
+
+    // TEMPORARY
+    min *= 60;
+    max *= 60;
   }
 
   const videoDisplayArea = document.querySelector("ytd-search.style-scope.ytd-page-manager > div#container > ytd-two-column-search-results-renderer > div#primary > ytd-section-list-renderer > div#contents");
@@ -55,16 +59,25 @@ function durationAndViewsFunctionality() {
           const duration = potentialVideo.querySelector("div.yt-badge-shape__text").textContent;
 
           if (duration === "SHORTS") {
-            // sketchy reverse engineering and JSON stuff that actually gets a duration
+            if (min > 3*60) {
+              // maximum length of shorts is 3 minutes
+              potentialVideo.remove(); //potentialVideo.hidden = true;
+            } else {
+              // actually get a duration somehow
 
-            console.log("temporarily hiding a short because I'm lazy");
-            potentialVideo.remove(); //potentialVideo.hidden = true;
+              // potentially by using stuff from injected-script?
+              // idk i think i might have to call stuff from the context of the injected script,
+              // because how would it figure out what data it needs
+              // or maybe from here I'll call something that tells the injected script what to do somehow
+
+              // ...
+            }
           }
 
           let seconds = getSecondsFromDuration(duration);
 
           // Temporary
-          if (seconds <= min*60 || seconds >= max*60) {
+          if (seconds <= min || seconds >= max) {
             potentialVideo.remove(); //potentialVideo.hidden = true;
           }
 
@@ -77,12 +90,12 @@ function durationAndViewsFunctionality() {
   }
 
   function getSecondsFromDuration(d) {
-    let result = 0;
+    let s = 0;
     let arr = d.split(":").reverse();
 
     for (let i = 0; i < arr.length; i++) {
-      result += (+arr[i]) * (60 ** (i));
+      s += (+arr[i]) * (60 ** (i));
     }
-    return result;
+    return s;
   }
 }

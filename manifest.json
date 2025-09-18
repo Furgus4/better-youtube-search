@@ -18,8 +18,13 @@
 				"dropdown-functionality/UploadDate.js",
 				"dropdown-functionality/View.js"
 			],
-			"css": ["content.css"]
+			"css": ["content.css"],
+            "run_at": "document_start"
 		}
 	],
-	"permissions": ["activeTab", "scripting"]
+	"permissions": ["activeTab", "scripting"],
+    "web_accessible_resources": [{
+        "resources": ["injected-script.js"],
+        "matches": ["https://www.youtube.com/*"]
+    }]
 }
