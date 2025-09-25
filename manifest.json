@@ -10,16 +10,15 @@
 		{
 			"matches": ["https://www.youtube.com/*"],
 			"js": [
-				"content.js",
-				"dropdown-functionality/DurationAndViews.js",
-				"dropdown-functionality/KeywordsAndTags.js",
-				"dropdown-functionality/SortBy.js",
-				"dropdown-functionality/Type.js",
-				"dropdown-functionality/UploadDate.js",
-				"dropdown-functionality/View.js"
+				"content.js"
 			],
-			"css": ["content.css"]
+			"css": ["content.css"],
+            "run_at": "document_start"
 		}
 	],
-	"permissions": ["activeTab", "scripting"]
+	"permissions": ["activeTab", "scripting"],
+    "web_accessible_resources": [{
+        "resources": ["video-data-scraper.js"],
+        "matches": ["https://www.youtube.com/*"]
+    }]
 }
