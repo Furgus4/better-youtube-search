@@ -18,7 +18,7 @@
 	],
 	"permissions": ["activeTab", "scripting"],
     "web_accessible_resources": [{
-        "resources": ["injected-script.js"],
+        "resources": ["video-data-scraper.js"],
         "matches": ["https://www.youtube.com/*"]
     }]
 }
