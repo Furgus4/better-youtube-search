@@ -1,10 +1,10 @@
-// for some reason ytInitialData.contents.twoColumnSearchResultsRenderer doesn't exist on the first load
 if (ytInitialData.contents.twoColumnSearchResultsRenderer === undefined) {
   location.reload();
+  // for some reason ytInitialData.contents.twoColumnSearchResultsRenderer doesn't exist on the first load
 }
 
 const videoData = new Map();
-const sendData = new CustomEvent("dataSent", { detail: videoData }); // might change this to a handshake method where content.js requests data
+const sendData = new CustomEvent("dataSent", { detail: videoData }); // might change this to a handshake method where main.js requests data
 
 const videoDataObserver = new MutationObserver(getDataFromSearchResults);
 let videoDisplayArea = document.querySelector("ytd-search.style-scope.ytd-page-manager > div#container > ytd-two-column-search-results-renderer > div#primary > ytd-section-list-renderer > div#contents");

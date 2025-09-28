@@ -1,44 +1,37 @@
-#duration-and-views {
-    background: #303030;
+#main-div {
+    font-family: Roboto, serif;
+    font-size: 14px;
     color: white;
-    border: 1px rgba(255, 255, 255, 0.2) solid;
-    border-radius: 8px;
-
-    width: 167px;
-    height: 40px;
-    position: absolute;
 
     display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-family: Roboto, serif;
-    font-weight: 500;
-    font-size: 14px;
-    text-align: center;
-
-    user-select: none;
+    justify-content: space-between;
+    width: 100%;
 }
 
-#dav-dd {
-    background: #303030;
-    color: white;
+#sub-div {
+    display: flex;
+    gap: 8px;
+}
+
+.chip {
+    background: #171717;
+    padding: 8px 12px 8px 16px;
     border: 1px rgba(255, 255, 255, 0.2) solid;
     border-radius: 8px;
-
-    position: absolute;
-    top: 56px;
-    width: 300px;
-    height: 68px;
-    display: none;
-    z-index: 100;
+    display: flex;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    align-items: center;
 }
 
-.text-field {
-    color: white;
-    background: #1C1C1C;
-    border-radius: 8px;
-    width: 100px;
-    height: 48px;
-    margin: auto;
+.icon {
+    font-family: "comic sans ms", serif; /* temporary */
+    transition: transform .3s ease;
+    width: fit-content;
+    height: fit-content;
+}
+
+.icon.flipped {
+    transform: rotate(-180deg);
 }
