@@ -13,6 +13,22 @@
     gap: 8px;
 }
 
+.dropdown {
+    background: #171717;
+    padding: 8px 12px 8px 16px;
+    border: 1px rgba(255, 255, 255, 0.2) solid;
+    border-radius: 8px;
+    display: flex;
+    position: absolute;
+    margin-top: 8px;
+    z-index: 100;
+}
+
+/* toggle class in js */
+.dropdown.hidden {
+    display: none;
+}
+
 .chip {
     background: #171717;
     padding: 8px 12px 8px 16px;
@@ -32,6 +48,7 @@
     height: fit-content;
 }
 
+/* toggle class in js */
 .icon.flipped {
     transform: rotate(-180deg);
 }

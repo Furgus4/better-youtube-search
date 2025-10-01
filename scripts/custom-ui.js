@@ -1,3 +1,41 @@
+window.trustedTypes.createPolicy('default', {
+  createHTML: (string, sink) => string
+});
+
+function sanitize(htmlText) {
+  return window.trustedTypes.defaultPolicy.createHTML(htmlText);
+}
+
+const toolbarHTML =
+  "<div id='main-div'>" +
+    "<div id='sub-div'>" +
+      "<div id='t' class='d-container'>" +
+        "<div class='chip'>Type<span class='icon'>V</span></div>" +
+        "<div class='dropdown hidden'>Test</div>" +
+      "</div>" +
+      "<div id='dav' class='d-container'>" +
+        "<div class='chip'>Duration & Views<span class='icon'>V</span></div>" +
+        "<div class='dropdown hidden'>Test 2</div>" +
+      "</div>" +
+      "<div id='ud' class='d-container'>" +
+        "<div class='chip'>Upload Date<span class='icon'>V</span></div>" +
+        "<div class='dropdown hidden'>Test 3</div>" +
+      "</div>" +
+      "<div id='kat' class='d-container'>" +
+        "<div class='chip'>Keywords & Tags<span class='icon'>V</span></div>" +
+        "<div class='dropdown hidden'>Test 4</div>" +
+      "</div>" +
+      "<div id='sb' class='d-container'>" +
+        "<div class='chip'>Sort By<span class='icon'>V</span></div>" +
+        "<div class='dropdown hidden'>Test 5</div>" +
+      "</div>" +
+    "</div>" +
+    "<div id='v' class='d-container'>" +
+      "<div class='chip'>View<span class='icon'>V</span></div>" +
+      "<div class='dropdown hidden'>Test 6</div>" +
+    "</div>" +
+  "</div>";
+
 let toolbar;
 const toolbarPath = "ytd-app > div#content > ytd-page-manager > ytd-search > div#container > div#header > ytd-search-header-renderer";
 
@@ -5,49 +43,37 @@ const toolbarObserver = new MutationObserver((mutationList, observer) => {
   if (document.querySelector(toolbarPath) !== null) {
     observer.disconnect();
     toolbar = document.querySelector(toolbarPath);
-    replaceToolbar();
+    toolbar.innerHTML = sanitize(toolbarHTML);
+    addListeners();
   }
 });
 
 toolbarObserver.observe(document.querySelector("ytd-app"), { childList: true, subtree: true });
 
-function replaceToolbar() {
-  for (const child of toolbar.children) {
-    child.remove();
+function addListeners() {
+  const containers = document.getElementsByClassName("d-container");
+
+  for (let i = 0; i < containers.length; i++) {
+    containers[i].onclick = (e) => {
+      showDropdown(containers[i]);
+    };
   }
 
-  const [mainDiv, subDiv, t, dav, ud, kat, sb, v] = [0, 0, 0, 0, 0, 0, 0, 0].map(() => document.createElement("div"));
-  [t.className, dav.className, ud.className, kat.className, sb.className, v.className] = "chip ".repeat(6).split(" ");
-  [mainDiv.id, subDiv.id, t.id, dav.id, ud.id, kat.id, sb.id, v.id] = ["main-div", "sub-div", "t", "dav", "ud", "kat", "sb", "v"];
+  function showDropdown(c) {
+    const d = c.querySelector(".dropdown");
+    d.classList.toggle("hidden");
+    const icon = c.querySelector(".icon");
+    icon.classList.toggle("flipped");
 
-  t.textContent   = "Type";
-  dav.textContent = "Duration & Views";
-  ud.textContent  = "Upload Date";
-  kat.textContent = "Keywords & Tags";
-  sb.textContent  = "Sort By";
-  v.textContent   = "View";
-
-  const [tI, davI, udI, katI, sbI, vI] = [0, 0, 0, 0, 0, 0].map(() => document.createElement("span"));
-
-  const dds = [t, dav, ud, kat, sb, v];
-  const ddis = [tI, davI, udI, katI, sbI, vI];
-
-  for (let i = 0; i < dds.length; i++) {
-    ddis[i].className = "icon";
-    ddis[i].textContent = "V"; // will probably use an actual icon at some point
-    dds[i].append(ddis[i]);
-    //dds[i].onclick = (e) => { ddis[i].classList.toggle("flipped") };
+    for (let i = 0; i < containers.length; i++) {
+      const currD = containers[i].querySelector(".dropdown");
+      if (currD !== d) {
+        currD.classList.add("hidden");
+      }
+      const currIcon = containers[i].querySelector(".icon");
+      if (currIcon !== icon) {
+        currIcon.classList.remove("flipped");
+      }
+    }
   }
-
-  toolbar.append(mainDiv);
-  mainDiv.append(subDiv, v);
-  subDiv.append(t, dav, ud, kat, sb);
 }
-
-
-
-
-
-
-
-

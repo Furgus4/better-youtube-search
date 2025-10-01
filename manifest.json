@@ -2,16 +2,14 @@
 	"manifest_version": 3,
 	"name": "better-youtube-search",
 	"version": "1.0",
-	"description": "",
+	"description": "way better than the default stuff",
 	"icons": {
 		"16": "images/icon-16.png"
 	},
 	"content_scripts": [
 		{
 			"matches": ["https://www.youtube.com/*"],
-			"js": [
-				"main.js"
-			],
+			"js": ["main.js"],
 			"css": ["content.css"],
             "run_at": "document_start"
 		}
