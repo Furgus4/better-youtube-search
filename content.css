@@ -15,18 +15,23 @@
 
 .dropdown {
     background: #171717;
-    padding: 8px 12px 8px 16px;
+    padding: 8px 16px 8px 16px;
     border: 1px rgba(255, 255, 255, 0.2) solid;
     border-radius: 8px;
     display: flex;
+    flex-direction: column;
     position: absolute;
     margin-top: 8px;
-    z-index: 100;
+    z-index: 1000;
 }
 
 /* toggle class in js */
 .dropdown.hidden {
     display: none;
+}
+
+#v.dropdown {
+    /* make it rooted on the right side instead of the left */
 }
 
 .chip {

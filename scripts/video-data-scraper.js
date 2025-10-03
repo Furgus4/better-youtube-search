@@ -20,7 +20,7 @@ function getDataFromSearchResults(mutationList, observer) {
           if (!videoData.has(videos[j].querySelector("a#video-title").textContent)) {
             const rawData = ytInitialData.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[i].itemSectionRenderer.contents[j].videoRenderer;
             videoData.set(videos[j].querySelector("a#video-title").textContent, {
-              "duration": getSecondsFromDuration(rawData.lengthText.simpleText), // might format this here
+              "duration": getSecondsFromDuration(rawData.lengthText.simpleText),
               "views": +rawData.viewCountText.simpleText.split(" ")[0].split(",").join(""),
               "hidden": false
             });

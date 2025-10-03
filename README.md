@@ -1,13 +1,29 @@
 ## Plan
 - [x] a file that populates `videoData` with video info from the `DOM`
 
-- [ ] a file that creates all the custom UI
+- [ ] a file that creates all the custom UI (temp UI focused on content)
+	- [x] the chips
+	- [x] the actual dropdowns
+	- [ ] the content in the dropdowns
+		- [x] type
+		- [ ] duration & views
+		- [x] upload date
+		- [ ] keywords & tags
+		- [x] sort by
+		- [x] view
 
 - [ ] a file or function that extracts the `filterCriteria` from the custom UI
 
-- [ ] a file or function that checks the `videoData` with the `filteCriteria` and uses the below functions
+- [ ] a function that checks the `videoData` with the `filteCriteria` and uses the below functions
 - [ ] a function that hides videos in the `DOM`
 - [ ] a function that unhides videos in the `DOM`
+
+- [ ] Iterate on UI
+- [ ] polish/create real UI in plugin
+- [ ] add final functionality to the UI
+	- [ ] duration unit selection
+	- [ ] view number formatting
+	- [ ] keyword & tag additions
 
 ## Current UI iteration
 <img width="3399" height="1029" alt="attempt-3" src="https://github.com/user-attachments/assets/a460d617-867b-4319-8e45-5c6a78f7590c" />
