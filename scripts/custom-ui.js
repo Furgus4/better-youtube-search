@@ -47,6 +47,28 @@ const toolbarHTML =
       "<div id='dav' class='d-container'>" +
         "<div class='chip'>Duration & Views<span class='icon'>V</span></div>" +
         "<div class='dropdown hidden'>" +
+          "<div>" +
+            "Duration" +
+            "<div>" +
+              "<label for='min-duration'>Min </label>" +
+              "<input type='number' id='min-duration'/>" +
+            "</div>" +
+            "<div>" +
+              "<label for='max-duration'>Max </label>" +
+              "<input type='number' id='max-duration'/>" +
+            "</div>" +
+          "</div>" +
+          "<div>" +
+            "Views" +
+            "<div>" +
+              "<label for='min-views'>Min </label>" +
+              "<input type='number' id='min-views'/>" +
+            "</div>" +
+            "<div>" +
+              "<label for='max-views'>Max </label>" +
+              "<input type='number' id='max-views'/>" +
+            "</div>" +
+          "</div>" +
         "</div>" +
       "</div>" +
 
@@ -66,7 +88,14 @@ const toolbarHTML =
 
       "<div id='kat' class='d-container'>" +
         "<div class='chip'>Keywords & Tags<span class='icon'>V</span></div>" +
-        "<div class='dropdown hidden'>Test 4</div>" +
+        "<div class='dropdown hidden'>" +
+          "Keywords" +
+          "<label for='keywords'>temp: 'keywords here'</label>" +
+          "<input type='text' id='keywords'/>" +
+          "Tags" +
+          "<label for='tags'>temp: 'tags here'</label>" +
+          "<input type='text' id='tags'/>" +
+        "</div>" +
       "</div>" +
 
       "<div id='sb' class='d-container'>" +
