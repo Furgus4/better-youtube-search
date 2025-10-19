@@ -1,3 +1,11 @@
+/*
+ * I may add event listeners to the html in this file
+ * they would call the function that checks the video data with the filter settings
+ *
+ * I'll probably actually handle that later and just call the function when the filter data changes
+ * If I did that, it would be in the file that extracts data from the filter input areas
+ */
+
 window.trustedTypes.createPolicy('default', {
   createHTML: (string, sink) => string
 });

@@ -1,16 +1,42 @@
 ## Plan
-- [x] ~~a file that populates `videoData` with video info from the `DOM`~~
+- [ ] a file that populates `videoData` with video info from the `DOM`
+	- [ ] Videos & Shorts
+		- [x] title
+		- [x] duration
+		- [x] views
+		- [x] type
+		- [ ] upload date
+		- [ ] watched
+		- [ ] sub-type? (suggested, etc.)
+	- [ ] Playlists
+		- [x] title
+		- [x] type
+		- [ ] views?
+		- [ ] upload date?
+	- [x] Channels
+		- [x] title
+		- [x] type
+	- [ ] Grids of shorts
+	- [ ] People also watched
+	- [ ] Ads?
 
-- [x] ~~a file that creates all the custom UI (temp UI focused on content)~~
+- [x] a file that creates all the custom UI (temp UI focused on content)
 
+- [ ] a function that checks the `videoData` with the `filteCriteria` and decides visibility
+	- [x] type
+	- [x] duration
+	- [x] views
+	- [ ] upload date
+	- [ ] keywords
+	- [ ] tags
+	- [ ] view
+		- [ ] watched/unwatched/all
+		- [ ] suggested
+		- [ ] for you
+		- [ ] people also watched
+		- [ ] sponsored
 
 - [ ] a file or function that extracts the `filterCriteria` from the custom UI
-
-
-- [ ] a function that checks the `videoData` with the `filteCriteria` and uses the below functions
-- [ ] a function that hides videos in the `DOM`
-- [ ] a function that unhides videos in the `DOM`
-
 
 - [ ] Iterate on UI
 - [ ] polish/create real UI in plugin
