@@ -1,23 +1,23 @@
 ## Plan
 - [ ] a file that populates `videoData` with video info from the `DOM`
-	- [ ] Videos & Shorts
+	- [x] Videos & Shorts
 		- [x] title
 		- [x] duration
 		- [x] views
 		- [x] type
-		- [ ] upload date
-		- [ ] watched
-		- [ ] sub-type? (suggested, etc.)
-	- [ ] Playlists
+		- [x] upload year
+		- [x] watched
+	- [x] Playlists
 		- [x] title
 		- [x] type
-		- [ ] views?
-		- [ ] upload date?
 	- [x] Channels
 		- [x] title
 		- [x] type
 	- [ ] Grids of shorts
 	- [ ] People also watched
+    - [ ] Suggested
+    - [ ] Sponsored
+    - [ ] For You
 	- [ ] Ads?
 
 - [x] a file that creates all the custom UI (temp UI focused on content)
@@ -26,11 +26,11 @@
 	- [x] type
 	- [x] duration
 	- [x] views
-	- [ ] upload date
+	- [x] upload year
 	- [ ] keywords
 	- [ ] tags
 	- [ ] view
-		- [ ] watched/unwatched/all
+		- [x] watched/unwatched/all
 		- [ ] suggested
 		- [ ] for you
 		- [ ] people also watched

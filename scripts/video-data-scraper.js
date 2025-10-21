@@ -5,12 +5,10 @@ if (ytInitialData.contents.twoColumnSearchResultsRenderer === undefined) {
 
 const data = new Map();
 
-function addData(type, title, duration, views, uploadDate, watched) {
-  if (!data.has(title)) {
-    const newData = { type: type, title: title, duration: duration, views: views, uploadDate: uploadDate, watched: watched, hidden: false }
-    data.set(title, newData);
-    checkVideo(data.get(title));
-  }
+function addData(type, title, duration, views, uploadYear, watched) {
+  const newData = { type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, hidden: false }
+  data.set(title, newData);
+  checkVideo(data.get(title));
 }
 
 const videoDataObserver = new MutationObserver(getDataFromSearchResults);
@@ -31,35 +29,40 @@ function getDataFromSearchResults() {
           .contents[i].itemSectionRenderer
           .contents[j];
 
-      // video or short
+      // video or short or livestream
       if (elements[j].tagName === "YTD-VIDEO-RENDERER") {
         const title = rawData.videoRenderer.title.runs[0].text;
+        if (data.has(title)) continue;
+
         const duration = getSecondsFromDuration(rawData.videoRenderer.lengthText.simpleText);
         const views = +rawData.videoRenderer.viewCountText.simpleText.split(" ")[0].split(",").join("");
-        const type = duration > 60*3 ? "video" : "short";
-        const uploadDate = undefined; // only because idk how to get it yet
-        const watched = undefined; // idk how to get this yet either
-        const subType = undefined; // could be suggested or something? idk because people also watched is its own section
+        const uploadYear = getActualUploadYear(rawData.videoRenderer.publishedTimeText.simpleText);
+        const watched = rawData.videoRenderer.isWatched || false;
+
+        let type = duration > 60*3 ? "video" : "short";
+        if (rawData.videoRenderer.publishedTimeText.simpleText.split(" ")[0] === "Streamed") {
+          type = "live";
+        }
 
         // I did this so that I could easily hide the video,
         // but I may just find the video in the hiding function using the title and querySelector instead
         elements[j].id = title;
-
-        addData(type, title, duration, views, uploadDate, watched, subType);
+        addData(type, title, duration, views, uploadYear, watched);
 
       // playlist
       } else if (elements[j].tagName === "YT-LOCKUP-VIEW-MODEL") {
         const title = rawData.lockupViewModel.metadata.lockupMetadataViewModel.title.content;
-        const duration = undefined; // always?
-        const views = undefined; // could actually probably find this
+        if (data.has(title)) continue;
+
+        const duration = undefined;
+        const views = undefined;
         const type = "playlist";
-        const uploadDate = undefined; // might be able to find this actually
-        const watched = undefined; // idk how this would work
+        const uploadYear = undefined;
+        const watched = undefined;
         const subType = undefined;
 
         elements[j].id = title;
-
-        addData(type, title, duration, views, uploadDate, watched, subType);
+        addData(type, title, duration, views, uploadYear, watched, subType);
 
       // ad? have yet to test without ad blocker
       } else if (elements[j].tagName === "YTD-AD-SLOT-RENDERER") {
@@ -83,16 +86,17 @@ function getDataFromSearchResults() {
       // channel
       } else if (elements[j].tagName === "YTD-CHANNEL-RENDERER") {
         const title = rawData.channelRenderer.title.simpleText;
+        if (data.has(title)) continue;
+
         const duration = undefined;
         const views = undefined;
         const type = "channel";
-        const uploadDate = undefined;
+        const uploadYear = undefined;
         const watched = undefined;
         const subType = undefined;
 
         elements[j].id = title;
-
-        addData(type, title, duration, views, uploadDate, watched, subType);
+        addData(type, title, duration, views, uploadYear, watched, subType);
       }
     }
   }
@@ -106,4 +110,33 @@ function getSecondsFromDuration(d) {
     result += (+arr[i]) * (60 ** (i));
   }
   return result;
+}
+
+function getActualUploadYear(howLongAgo) {
+  let arr = howLongAgo.split(" ");
+
+  if (arr[0] === "Streamed") {
+    arr = [arr[1], arr[2]];
+  }
+
+  const unit = arr[1];
+  const amount = arr[0];
+  
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1;
+  const currentDay = +(new Date().toString().split(" ")[2]);
+  
+  let actualYearUploaded;
+  
+  if (unit === "years" || unit === "year") {
+    actualYearUploaded = currentYear - amount;
+  } else if ((unit === "months" || unit === "month") && currentMonth - amount < 0) {
+    actualYearUploaded = currentYear - 1;
+  } else if ((unit === "days" || unit === "day") && (currentDay - amount < 0 && currentMonth - 1 < 0)) {
+    actualYearUploaded = currentYear - 1;
+  } else {
+    actualYearUploaded = currentYear;
+  }
+
+  return actualYearUploaded;
 }

@@ -81,7 +81,7 @@ const toolbarHTML =
       "</div>" +
 
       "<div id='ud' class='d-container'>" +
-        "<div class='chip'>Upload Date<span class='icon'>V</span></div>" +
+        "<div class='chip'>Upload Year<span class='icon'>V</span></div>" +
         "<div class='dropdown hidden'>" +
           "<div>" +
             "<label for='min-date'>Min </label>" +
