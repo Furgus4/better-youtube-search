@@ -1,11 +1,12 @@
 window.addEventListener("yt-navigate-finish", () => {
   if (document.URL.startsWith("https://www.youtube.com/results")) {
     // is there some way to preload this stuff?
-    // should it all be in one script?
-    // should some of this stuff happen in main.js? (not the scraper)
+    // should some of this stuff happen here in main.js?
+    // (checkVideo in hide-unhide-elements.js loads too late sometimes)
 
-    injectScript('scripts/unnamed.js'); // obviously temp name
-    injectScript('scripts/video-data-scraper.js');
+    injectScript('scripts/hide-unhide-elements.js');
+    injectScript('scripts/helpers.js');
+    injectScript('scripts/element-data-scraper.js');
     injectScript('scripts/custom-ui.js');
   }
 });

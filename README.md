@@ -22,6 +22,7 @@
 		- [x] title
 		- [x] type
 	- [x] Curated (People also watched, Suggested, For You, etc.) 
+    - [ ] Songs?
 	- [ ] Grids of shorts (just hiding these for now bacuase I can't get much data on the shorts)
 	- [ ] Sponsored? (I think this is in the ad-renderers but I'm not sure) (I've never seen one)
 

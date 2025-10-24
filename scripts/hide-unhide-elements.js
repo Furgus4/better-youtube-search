@@ -18,8 +18,6 @@ const filterSettings = { // updates when the user changes the filters
   //sortBy: "default",
 
   show: "all", // all, watched, unwatched
-  //"suggested": ?,
-  // "for you": ?
   curated: true, // people also watched, explore more, ...
   //"sponsored": ?
 }
