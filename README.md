@@ -20,11 +20,8 @@
 		- [x] title
 		- [x] type
 	- [ ] Grids of shorts
-	- [ ] People also watched
-    - [ ] Suggested
-    - [ ] Sponsored
-    - [ ] For You
-	- [ ] Ads?
+	- [x] Curated (People also watched, Suggested, For You, etc.) (still need to hide the whole thing if all the videos are hidden based on other criteria)
+    - [ ] Sponsored? (i think this is actually the ad-renderer)
 
 - [x] a file that creates all the custom UI (temp UI focused on content)
 
