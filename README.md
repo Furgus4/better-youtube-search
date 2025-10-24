@@ -5,6 +5,8 @@
 <img width="3319" height="912" alt="attempt-3 in context" src="https://github.com/user-attachments/assets/6a9e8250-99ee-4d3c-b64c-b905295dcdbb" />
 
 ## Plan
+- [x] a file that creates all the custom UI (currrent UI is temporary)
+
 - [ ] a file that populates `videoData` with video info from the `DOM`
 	- [x] Videos & Shorts
 		- [x] title
@@ -19,11 +21,10 @@
 	- [x] Channels
 		- [x] title
 		- [x] type
-	- [ ] Grids of shorts
 	- [x] Curated (People also watched, Suggested, For You, etc.) (still need to hide the whole thing if all the videos are hidden based on other criteria)
-    - [ ] Sponsored? (i think this is actually the ad-renderer)
-
-- [x] a file that creates all the custom UI (temp UI focused on content)
+	- [ ] Grids of shorts (just hiding these for now bacuase I can't get much data on the shorts)
+	- [ ] Sponsored? (I think this is in the ad-renderers but I'm not sure) (I've never seen one)
+    - [ ] Make sure that it can unhide videos as the filters change (would have to implement after the file that extracts `filterCriteria` from the UI)
 
 - [ ] a function that checks the `videoData` with the `filteCriteria` and decides visibility
 	- [x] type
@@ -32,14 +33,11 @@
 	- [x] upload year
 	- [ ] keywords
 	- [ ] tags
-	- [ ] view
-		- [x] watched/unwatched/all
-		- [ ] suggested
-		- [ ] for you
-		- [ ] people also watched
-		- [ ] sponsored
+	- [x] watched/unwatched/all
+	- [x] curated
+	- [ ] sponsored (have yet to see one)
 
-- [ ] a file or function that extracts the `filterCriteria` from the custom UI
+- [ ] a file or function that extracts the `filterCriteria` from the custom UI as it changes
 
 - [ ] Iterate on UI
 - [ ] polish/create real UI in plugin
