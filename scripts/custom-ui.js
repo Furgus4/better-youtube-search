@@ -94,15 +94,12 @@ const toolbarHTML =
         "</div>" +
       "</div>" +
 
-      "<div id='kat' class='d-container'>" +
-        "<div class='chip'>Keywords & Tags<span class='icon'>V</span></div>" +
+      "<div id='k' class='d-container'>" +
+        "<div class='chip'>Keywords<span class='icon'>V</span></div>" +
         "<div class='dropdown hidden'>" +
           "Keywords" +
           "<label for='keywords'>temp: 'keywords here'</label>" +
           "<input type='text' id='keywords'/>" +
-          "Tags" +
-          "<label for='tags'>temp: 'tags here'</label>" +
-          "<input type='text' id='tags'/>" +
         "</div>" +
       "</div>" +
 
@@ -145,21 +142,25 @@ const toolbarHTML =
           "<label for='unwatched'>Unwatched</label>" +
         "</div>" +
         "<div>" +
-          "<input type='checkbox' id='suggested'/>" +
-          "<label for='suggested'>Suggested</label>" +
+          "<input type='checkbox' id='curated'/>" +
+          "<label for='curated'>Curated</label>" +
         "</div>" +
-        "<div>" +
-          "<input type='checkbox' id='for-you'/>" +
-          "<label for='for-you'>For You</label>" +
-        "</div>" +
-        "<div>" +
-          "<input type='checkbox' id='people-also-watched'/>" +
-          "<label for='people-also-watched'>People Also Watched</label>" +
-        "</div>" +
-        "<div>" +
-          "<input type='checkbox' id='sponsored'/>" +
-          "<label for='sponsored'>Sponsored</label>" +
-        "</div>" +
+        //"<div>" +
+          //"<input type='checkbox' id='suggested'/>" +
+          //"<label for='suggested'>Suggested</label>" +
+        //"</div>" +
+        //"<div>" +
+          //"<input type='checkbox' id='for-you'/>" +
+          //"<label for='for-you'>For You</label>" +
+        //"</div>" +
+        //"<div>" +
+          //"<input type='checkbox' id='people-also-watched'/>" +
+          //"<label for='people-also-watched'>People Also Watched</label>" +
+        //"</div>" +
+        //"<div>" +
+          //"<input type='checkbox' id='sponsored'/>" +
+          //"<label for='sponsored'>Sponsored</label>" +
+        //"</div>" +
       "</div>" +
     "</div>" +
   "</div>";
@@ -179,6 +180,7 @@ const toolbarObserver = new MutationObserver((mutationList, observer) => {
 toolbarObserver.observe(document.querySelector("ytd-app"), { childList: true, subtree: true });
 
 function addListeners() {
+  // adding for dropdown functionality
   const containers = document.getElementsByClassName("d-container");
 
   for (let i = 0; i < containers.length; i++) {
@@ -205,4 +207,32 @@ function addListeners() {
       }
     }
   }
+
+  // adding for video checks on change
+
+  //add to all type checkboxes
+  // this listener should update the types in filter settings
+
+
+  //add to duration inputs
+  // this listener should update the duration in filter settings
+
+
+  //add to view inputs
+  // this listener should update the views in filter settings
+
+
+  //add to upload year inputs
+  // this listener should update the uploadYear in filter settings
+
+
+  //idek for keywords yet
+  // it'll update the keywords in the filter settings though
+
+
+  //add to the sortBy radio buttons
+  // this listener should update the sortBy in filter settings
+
+  //add to the view radio buttons and checkboxes
+  // this should update the view and curated filter settings
 }

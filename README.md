@@ -23,22 +23,28 @@
 		- [x] type
 	- [x] Curated (People also watched, Suggested, For You, etc.) 
     - [ ] Songs?
-	- [ ] Grids of shorts (just hiding these for now bacuase I can't get much data on the shorts)
-	- [ ] Sponsored? (I think this is in the ad-renderers but I'm not sure) (I've never seen one)
+	- [ ] Sponsored?
 
 - [ ] a function that checks the `videoData` with the `filteCriteria` and decides visibility
 	- [x] type
 	- [x] duration
 	- [x] views
 	- [x] upload year
-	- [ ] keywords
-	- [ ] tags
+	- [x] keywords
 	- [x] watched/unwatched/all
-	- [x] curated (still need to hide the whole thing if all the videos are hidden based on other criteria)
-	- [ ] sponsored (have yet to see one)
+	- [ ] curated (still need to hide the whole thing if all the videos are hidden based on other criteria)
+	- [ ] sponsored
     - [ ] Make sure that it can unhide videos as the filters change (would have to implement after the file that extracts `filterCriteria` from the UI)
 
+- [ ] a function or file that sorts all the videos as they load
+
 - [ ] a file or function that extracts the `filterCriteria` from the custom UI as it changes
+  - [ ] Type
+  - [ ] Duration & Views
+  - [ ] Upload Year
+  - [ ] Keywords
+  - [ ] Sort By
+  - [ ] View
 
 - [ ] Iterate on UI
 - [ ] polish/create real UI in plugin

@@ -3,9 +3,8 @@ window.addEventListener("yt-navigate-finish", () => {
     // is there some way to preload this stuff?
     // should some of this stuff happen here in main.js?
     // (checkVideo in hide-unhide-elements.js loads too late sometimes)
-
-    injectScript('scripts/hide-unhide-elements.js');
     injectScript('scripts/helpers.js');
+    injectScript('scripts/hide-unhide-elements.js');
     injectScript('scripts/element-data-scraper.js');
     injectScript('scripts/custom-ui.js');
   }

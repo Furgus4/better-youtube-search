@@ -4,18 +4,17 @@ const filterSettings = { // updates when the user changes the filters
   "playlist": true,
   "channel": true,
   "live": true,
-  //"podcast": true,
-  //"song": true,
+  //?"podcast": true?
+  //?"song": true?
 
-  duration: [undefined, undefined],
-  views: [undefined, undefined],
+  duration: [],
+  views: [],
 
-  uploadYear: [undefined, undefined],
+  uploadYear: [],
 
-  //keywords: [],
-  //tags: [],
+  keywords: [/*"UI", "short"*/],
 
-  //sortBy: "default",
+  sortBy: "default", // default, date, duration, views // idk how im gonna implement this yet
 
   show: "all", // all, watched, unwatched
   curated: true, // people also watched, explore more, ...
@@ -38,7 +37,7 @@ function checkVideo(elementData, element) {
     elementData.hidden = true;
     console.log("was too long");
 
-    // views
+  // views
   } else if (elementData.views < filterSettings.views[0]) {
     elementData.hidden = true;
     console.log("didn't have enough views");
@@ -46,7 +45,7 @@ function checkVideo(elementData, element) {
     elementData.hidden = true;
     console.log("had too many views");
 
-    // upload year
+  // upload year
   } else if (elementData.uploadYear < filterSettings.uploadYear[0]) {
     elementData.hidden = true;
     console.log("uploaded too long ago");
@@ -74,6 +73,19 @@ function checkVideo(elementData, element) {
     }
 
     console.log("hiding whole thing because curated content is disabled");
+
+
+  // keywords (currently a video needs all keywords otherwise it is hidden)
+  // I might make it less strict or add a setting for that
+  } else {
+    console.log("checking against keywords");
+    for (let i = 0; i < filterSettings.keywords.length; i++) {
+      if (!elementData.title.toLowerCase().includes(filterSettings.keywords[i].toLowerCase())) {
+        console.log("hiding because it didn't have keywords");
+        console.log(elementData.title, filterSettings.keywords[i]);
+        elementData.hidden = true;
+      }
+    }
   }
 
   // after checking everything the else would be false,
