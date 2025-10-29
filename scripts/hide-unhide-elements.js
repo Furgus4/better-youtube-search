@@ -1,16 +1,20 @@
 const filterSettings = { // updates when the user changes the filters
-  "video": true, // setting everything to false could be a good way to test this in the future as some things are slipping through
-  "short": true,
-  "playlist": true,
-  "channel": true,
+  "videos": true, // setting everything to false could be a good way to test this in the future as some things are slipping through
+  "shorts": true,
+  "playlists": true,
+  "channels": true,
   "live": true,
   //?"podcast": true?
   //?"song": true?
 
-  duration: [],
-  views: [],
+  minDuration: undefined,
+  maxDuration: undefined,
 
-  uploadYear: [],
+  minViews: undefined,
+  maxViews: undefined,
+
+  minUploadYear: undefined,
+  maxUploadYear: undefined,
 
   keywords: [/*"UI", "short"*/],
 
@@ -30,26 +34,26 @@ function checkVideo(elementData, element) {
     console.log("type not included");
 
   // duration
-  } else if (elementData.duration < filterSettings.duration[0]) {
+  } else if (elementData.duration < filterSettings.minDuration) {
     elementData.hidden = true;
     console.log("was too short");
-  } else if (elementData.duration > filterSettings.duration[1]) {
+  } else if (elementData.duration > filterSettings.maxDuration) {
     elementData.hidden = true;
     console.log("was too long");
 
   // views
-  } else if (elementData.views < filterSettings.views[0]) {
+  } else if (elementData.views < filterSettings.minViews) {
     elementData.hidden = true;
     console.log("didn't have enough views");
-  } else if (elementData.views > filterSettings.views[1]) {
+  } else if (elementData.views > filterSettings.maxViews) {
     elementData.hidden = true;
     console.log("had too many views");
 
   // upload year
-  } else if (elementData.uploadYear < filterSettings.uploadYear[0]) {
+  } else if (elementData.uploadYear < filterSettings.minUploadYear) {
     elementData.hidden = true;
     console.log("uploaded too long ago");
-  } else if (elementData.uploadYear > filterSettings.uploadYear[1]) {
+  } else if (elementData.uploadYear > filterSettings.maxUploadYear) {
     elementData.hidden = true;
     console.log("uploaded too recently");
 
@@ -77,7 +81,7 @@ function checkVideo(elementData, element) {
 
   // keywords (currently a video needs all keywords otherwise it is hidden)
   // I might make it less strict or add a setting for that
-  } else {
+  } else if (filterSettings.keywords[0] !== undefined) {
     console.log("checking against keywords");
     for (let i = 0; i < filterSettings.keywords.length; i++) {
       if (!elementData.title.toLowerCase().includes(filterSettings.keywords[i].toLowerCase())) {

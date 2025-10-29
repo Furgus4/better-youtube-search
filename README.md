@@ -5,8 +5,6 @@
 <img width="3319" height="912" alt="attempt-3 in context" src="https://github.com/user-attachments/assets/6a9e8250-99ee-4d3c-b64c-b905295dcdbb" />
 
 ## Plan
-- [x] a file that creates all the custom UI (currrent UI is temporary)
-
 - [ ] a file that populates `videoData` with video info from the `DOM`
 	- [x] Videos & Shorts
 		- [x] title
@@ -39,16 +37,15 @@
 - [ ] a function or file that sorts all the videos as they load
 
 - [ ] a file or function that extracts the `filterCriteria` from the custom UI as it changes
-  - [ ] Type
-  - [ ] Duration & Views
-  - [ ] Upload Year
+  - [x] Type
+  - [x] Duration & Views
+  - [x] Upload Year
   - [ ] Keywords
-  - [ ] Sort By
-  - [ ] View
+  - [x] Sort By
+  - [x] View
 
-- [ ] Iterate on UI
-- [ ] polish/create real UI in plugin
-- [ ] add final functionality to the UI
-	- [ ] duration unit selection
-	- [ ] view number formatting
-	- [ ] keyword & tag additions
+- [ ] Create actual UI
+  - [ ] make it look good
+  - [ ] keyword addition and removal functionality
+  - [ ] duration unit selection???
+  - [ ] view number formatting???

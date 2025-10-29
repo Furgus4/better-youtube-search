@@ -22,33 +22,33 @@ const toolbarHTML =
         "<div class='chip'>Type<span class='icon'>V</span></div>" +
         "<div class='dropdown hidden'>" +
           "<div>" +
-            "<input type='checkbox' id='videos'/>" +
+            "<input type='checkbox' id='videos' checked/>" +
             "<label for='videos'>Videos</label>" +
           "</div>" +
           "<div>" +
-            "<input type='checkbox' id='shorts'/>" +
+            "<input type='checkbox' id='shorts' checked/>" +
             "<label for='shorts'>Shorts</label>" +
           "</div>" +
           "<div>" +
-            "<input type='checkbox' id='playlists'/>" +
+            "<input type='checkbox' id='playlists' checked/>" +
             "<label for='playlists'>Playlists</label>" +
           "</div>" +
           "<div>" +
-            "<input type='checkbox' id='channels'/>" +
+            "<input type='checkbox' id='channels' checked/>" +
             "<label for='channels'>Channels</label>" +
           "</div>" +
+          //"<div>" +
+            //"<input type='checkbox' id='podcasts' checked/>" +
+            //"<label for='podcasts'>Podcasts</label>" +
+          //"</div>" +
           "<div>" +
-            "<input type='checkbox' id='podcasts'/>" +
-            "<label for='podcasts'>Podcasts</label>" +
-          "</div>" +
-          "<div>" +
-            "<input type='checkbox' id='live'/>" +
+            "<input type='checkbox' id='live' checked/>" +
             "<label for='live'>Live</label>" +
           "</div>" +
-          "<div>" +
-            "<input type='checkbox' id='songs'/>" +
-            "<label for='songs'>Songs</label>" +
-          "</div>" +
+          //"<div>" +
+            //"<input type='checkbox' id='songs' checked/>" +
+            //"<label for='songs'>Songs</label>" +
+          //"</div>" +
         "</div>" +
       "</div>" +
 
@@ -58,23 +58,23 @@ const toolbarHTML =
           "<div>" +
             "Duration" +
             "<div>" +
-              "<label for='min-duration'>Min </label>" +
-              "<input type='number' id='min-duration'/>" +
+              "<label for='minDuration'>Min </label>" +
+              "<input type='number' id='minDuration'/>" +
             "</div>" +
             "<div>" +
-              "<label for='max-duration'>Max </label>" +
-              "<input type='number' id='max-duration'/>" +
+              "<label for='maxDuration'>Max </label>" +
+              "<input type='number' id='maxDuration'/>" +
             "</div>" +
           "</div>" +
           "<div>" +
             "Views" +
             "<div>" +
-              "<label for='min-views'>Min </label>" +
-              "<input type='number' id='min-views'/>" +
+              "<label for='minViews'>Min </label>" +
+              "<input type='number' id='minViews'/>" +
             "</div>" +
             "<div>" +
-              "<label for='max-views'>Max </label>" +
-              "<input type='number' id='max-views'/>" +
+              "<label for='maxViews'>Max </label>" +
+              "<input type='number' id='maxViews'/>" +
             "</div>" +
           "</div>" +
         "</div>" +
@@ -84,12 +84,12 @@ const toolbarHTML =
         "<div class='chip'>Upload Year<span class='icon'>V</span></div>" +
         "<div class='dropdown hidden'>" +
           "<div>" +
-            "<label for='min-date'>Min </label>" +
-            "<input type='date' id='min-date'/>" +
+            "<label for='minUploadYear'>Min </label>" +
+            "<input type='number' id='minUploadYear'/>" +
           "</div>" +
           "<div>" +
-            "<label for='max-date'>Max </label>" +
-            "<input type='date' id='max-date'/>" +
+            "<label for='maxUploadYear'>Max </label>" +
+            "<input type='number' id='maxUploadYear'/>" +
           "</div>" +
         "</div>" +
       "</div>" +
@@ -142,7 +142,7 @@ const toolbarHTML =
           "<label for='unwatched'>Unwatched</label>" +
         "</div>" +
         "<div>" +
-          "<input type='checkbox' id='curated'/>" +
+          "<input type='checkbox' id='curated' checked/>" +
           "<label for='curated'>Curated</label>" +
         "</div>" +
         //"<div>" +
@@ -208,31 +208,48 @@ function addListeners() {
     }
   }
 
-  // adding for video checks on change
+  // For updating filterSettings:
+  let typeCheckboxes = document.querySelector("div#t > div.dropdown")
+  typeCheckboxes.onchange = e => {
+    filterSettings[e.target.id] = !filterSettings[e.target.id];
+    // check all videos
+  };
 
-  //add to all type checkboxes
-  // this listener should update the types in filter settings
+  let durationAndViewInputs = document.querySelector("div#dav > div.dropdown");
+  let uploadDateInputs = document.querySelector("div#ud > div.dropdown");
+  durationAndViewInputs.onchange = e => {
+    if (e.target.value === "") {
+      filterSettings[e.target.id] = undefined;
+    } else {
+      filterSettings[e.target.id] = +e.target.value;
+    }
+    // check all videos
+  };
+  uploadDateInputs.onchange = e => {
+    if (e.target.value === "") {
+      filterSettings[e.target.id] = undefined;
+    } else {
+      filterSettings[e.target.id] = +e.target.value;
+    }
+    // check all videos
+  }
 
+  // idk for keywords yet
 
-  //add to duration inputs
-  // this listener should update the duration in filter settings
+  let sortByRadioButtons = document.querySelector("div#sb > div.dropdown");
+  sortByRadioButtons.onchange = e => {
+    console.log(e.target.id);
+    filterSettings.sortBy = e.target.id;
+  }
 
-
-  //add to view inputs
-  // this listener should update the views in filter settings
-
-
-  //add to upload year inputs
-  // this listener should update the uploadYear in filter settings
-
-
-  //idek for keywords yet
-  // it'll update the keywords in the filter settings though
-
-
-  //add to the sortBy radio buttons
-  // this listener should update the sortBy in filter settings
-
-  //add to the view radio buttons and checkboxes
-  // this should update the view and curated filter settings
+  let viewRadioButtonsAndCheckboxes = document.querySelector("div#v > div.dropdown");
+  viewRadioButtonsAndCheckboxes.onchange = e => {
+    console.log(e.target.id);
+    if (e.target.id === "curated") {
+      filterSettings.curated = !filterSettings.curated;
+    } else {
+      filterSettings.show = e.target.id;
+    }
+    // check all videos
+  }
 }

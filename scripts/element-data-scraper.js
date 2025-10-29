@@ -69,7 +69,7 @@ function extractElementData(i, j, element) {
     const uploadYear = getActualUploadYear(rawData.videoRenderer.publishedTimeText.simpleText);
     const watched = rawData.videoRenderer.isWatched || false;
 
-    let type = duration > 60*3 ? "video" : "short";
+    let type = duration > 60*3 ? "videos" : "shorts";
     if (rawData.videoRenderer.publishedTimeText.simpleText.split(" ")[0] === "Streamed") {
       type = "live";
     }
@@ -86,7 +86,7 @@ function extractElementData(i, j, element) {
 
     const duration = undefined;
     const views = undefined;
-    const type = "playlist";
+    const type = "playlists";
     const uploadYear = undefined;
     const watched = undefined;
     const curated = false;
@@ -143,7 +143,7 @@ function extractElementData(i, j, element) {
       const uploadYear = getActualUploadYear(itemsData[k].videoRenderer.publishedTimeText.simpleText);
       const watched = itemsData[k].videoRenderer.isWatched || false;
 
-      let type = duration > 60*3 ? "video" : "short";
+      let type = duration > 60*3 ? "videos" : "shorts";
       if (itemsData[k].videoRenderer.publishedTimeText.simpleText.split(" ")[0] === "Streamed") {
         type = "live";
       }
@@ -159,7 +159,7 @@ function extractElementData(i, j, element) {
     const title = rawData.channelRenderer.title.simpleText;
     const duration = undefined;
     const views = undefined;
-    const type = "channel";
+    const type = "channels";
     const uploadYear = undefined;
     const watched = undefined;
     const curated = false;
