@@ -5,7 +5,7 @@
 <img width="3319" height="912" alt="attempt-3 in context" src="https://github.com/user-attachments/assets/6a9e8250-99ee-4d3c-b64c-b905295dcdbb" />
 
 ## Plan
-- [ ] a file that populates `videoData` with video info from the `DOM`
+- [x] a file that populates `videoData` with video info from the `DOM`
 	- [x] Videos & Shorts
 		- [x] title
 		- [x] duration
@@ -23,20 +23,20 @@
     - [ ] Songs?
 	- [ ] Sponsored?
 
-- [ ] a function that checks the `videoData` with the `filteCriteria` and decides visibility
+- [x] a function that checks the `videoData` with the `filteCriteria` and decides visibility
 	- [x] type
 	- [x] duration
 	- [x] views
 	- [x] upload year
 	- [x] keywords
 	- [x] watched/unwatched/all
-	- [ ] curated (still need to hide the whole thing if all the videos are hidden based on other criteria)
+	- [ ] curated (broken) (still need to hide the whole thing if all the videos are hidden based on other criteria)
 	- [ ] sponsored
-    - [ ] Make sure that it can unhide videos as the filters change (would have to implement after the file that extracts `filterCriteria` from the UI)
+    - [x] Make sure that it can unhide videos as the filters change
 
 - [ ] a function or file that sorts all the videos as they load
 
-- [ ] a file or function that extracts the `filterCriteria` from the custom UI as it changes
+- [x] a file or function that extracts the `filterCriteria` from the custom UI as it changes
   - [x] Type
   - [x] Duration & Views
   - [x] Upload Year
@@ -45,7 +45,7 @@
   - [x] View
 
 - [ ] Create actual UI
-  - [ ] make it look good
   - [ ] keyword addition and removal functionality
   - [ ] duration unit selection???
   - [ ] view number formatting???
+  - [ ] make it look good
