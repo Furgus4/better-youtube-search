@@ -76,8 +76,8 @@ function extractElementData(i, j, element) {
 
     const curated = false;
 
-    data.set(title, { type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
-    checkVideo(data.get(title), element);
+    data.set(title, { element: element, type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
+    checkElement(data.get(title));
   }
 
   // playlist
@@ -91,8 +91,8 @@ function extractElementData(i, j, element) {
     const watched = undefined;
     const curated = false;
 
-    data.set(title, { type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
-    checkVideo(data.get(title), element);
+    data.set(title, { element: element, type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
+    checkElement(data.get(title));
   }
 
   // idek
@@ -148,8 +148,8 @@ function extractElementData(i, j, element) {
         type = "live";
       }
 
-      data.set(title, { type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
-      checkVideo(data.get(title), item);
+      data.set(title, { element: element, type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
+      checkElement(data.get(title));
       k++;
     }
   }
@@ -164,7 +164,7 @@ function extractElementData(i, j, element) {
     const watched = undefined;
     const curated = false;
 
-    data.set(title, { type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
-    checkVideo(data.get(title), element);
+    data.set(title, { element: element, type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
+    checkElement(data.get(title));
   }
 }

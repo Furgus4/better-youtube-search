@@ -25,8 +25,10 @@ const filterSettings = { // updates when the user changes the filters
   //"sponsored": ?
 }
 
-function checkVideo(elementData, element) {
-  // account for all the undefined stuff that could happen
+function checkElement(elementData) {
+  elementData.hidden = false;
+
+  // need to make sure I'm accounting for all the undefined stuff that could happen
 
   // type
   if (!filterSettings[elementData.type]) {
@@ -70,7 +72,7 @@ function checkVideo(elementData, element) {
   else if (elementData.curated && !filterSettings.curated) {
     elementData.hidden = true;
 
-    const parentContainer = element.parentElement.parentElement.parentElement.parentElement.parentElement;
+    const parentContainer = elementData.element.parentElement.parentElement.parentElement.parentElement.parentElement;
     console.log(parentContainer);
     if (!parentContainer.hidden) {
       parentContainer.hidden = true;
@@ -96,13 +98,12 @@ function checkVideo(elementData, element) {
   // allowing videos to be unhidden as filters change
 
   // hide or unhide videos
-  element.hidden = elementData.hidden;
+  elementData.element.hidden = elementData.hidden;
 }
 
-// Don't know that I'll use this
-//function checkAllVideos() {
-  //console.log("checking all videos");
-  //data.forEach(v => {
-    //checkVideo(v)
-  //});
-//}
+
+function checkAllElements() {
+  data.forEach(elementData => {
+    checkElement(elementData);
+  });
+}

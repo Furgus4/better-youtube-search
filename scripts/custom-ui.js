@@ -212,7 +212,7 @@ function addListeners() {
   let typeCheckboxes = document.querySelector("div#t > div.dropdown")
   typeCheckboxes.onchange = e => {
     filterSettings[e.target.id] = !filterSettings[e.target.id];
-    // check all videos
+    checkAllElements();
   };
 
   let durationAndViewInputs = document.querySelector("div#dav > div.dropdown");
@@ -223,7 +223,7 @@ function addListeners() {
     } else {
       filterSettings[e.target.id] = +e.target.value;
     }
-    // check all videos
+    checkAllElements();
   };
   uploadDateInputs.onchange = e => {
     if (e.target.value === "") {
@@ -231,7 +231,7 @@ function addListeners() {
     } else {
       filterSettings[e.target.id] = +e.target.value;
     }
-    // check all videos
+    checkAllElements();
   }
 
   // idk for keywords yet
@@ -250,6 +250,6 @@ function addListeners() {
     } else {
       filterSettings.show = e.target.id;
     }
-    // check all videos
+    checkAllElements();
   }
 }
