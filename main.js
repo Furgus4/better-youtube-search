@@ -3,6 +3,33 @@ if (ytInitialData.contents.twoColumnSearchResultsRenderer === undefined) {
   // for some reason ytInitialData.contents.twoColumnSearchResultsRenderer doesn't exist on the first load
 }
 
+const filterSettings = { // updates when the user changes the filters
+  "videos": true, // setting everything to false could be a good way to test this in the future as some things are slipping through
+  "shorts": true,
+  "playlists": true,
+  "channels": true,
+  "live": true,
+  //?"podcast": true?
+  //?"song": true?
+
+  minDuration: undefined,
+  maxDuration: undefined,
+
+  minViews: undefined,
+  maxViews: undefined,
+
+  minUploadYear: undefined,
+  maxUploadYear: undefined,
+
+  keywords: [],
+
+  sortBy: "default", // default, date, duration, views // idk how im gonna implement this yet
+
+  show: "all", // all, watched, unwatched
+  curated: true, // people also watched, explore more, ...
+  //"sponsored": ?
+}
+
 const data = new Map();
 
 let elementDisplayArea = document.querySelector("ytd-search.style-scope.ytd-page-manager > div#container > ytd-two-column-search-results-renderer > div#primary > ytd-section-list-renderer > div#contents");
@@ -54,6 +81,8 @@ function observeNewElementsInGroup(group, i, j) {
 }
 
 function extractElementData(i, j, element) {
+  //console.log(i,j,element);
+
   const rawData = ytInitialData
     .contents.twoColumnSearchResultsRenderer
     .primaryContents.sectionListRenderer
@@ -68,13 +97,21 @@ function extractElementData(i, j, element) {
     const views = +rawData.videoRenderer.viewCountText.simpleText.split(" ")[0].split(",").join("") || 0;
     const uploadYear = getActualUploadYear(rawData.videoRenderer.publishedTimeText.simpleText);
     const watched = rawData.videoRenderer.isWatched || false;
+    const curated = false;
 
-    let type = duration > 60*3 ? "videos" : "shorts";
+    let type = "videos";
+
+    for (const overlay of rawData.videoRenderer.thumbnailOverlays) {
+      if (overlay.thumbnailOverlayTimeStatusRenderer !== undefined) {
+        if (overlay.thumbnailOverlayTimeStatusRenderer.style === "SHORTS") {
+          type = "shorts";
+        }
+      }
+    }
+
     if (rawData.videoRenderer.publishedTimeText.simpleText.split(" ")[0] === "Streamed") {
       type = "live";
     }
-
-    const curated = false;
 
     data.set(title, { element: element, type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
     checkElement(data.get(title));
@@ -103,15 +140,15 @@ function extractElementData(i, j, element) {
   // grid of shorts
   else if (element.tagName === "GRID-SHELF-VIEW-MODEL") {
     // idk how to get uploadYear, duration, watched, or exact views
-    /*const type = "short";
-    const duration = 3*60;
-    const uploadYear = undefined;
-    const watched = undefined;
-    for (const short of rawData.gridShelfViewModel.contents) {
+    //const type = "short";
+    //const duration = 3*60;
+    //const uploadYear = undefined;
+    //const watched = undefined;
+    //for (const short of rawData.gridShelfViewModel.contents) {
       //console.log(short.shortsLockupViewModel);
-      const title = short.shortsLockupViewModel.overlayMetadata.primaryText.content;
-      const views = short.shortsLockupViewModel.overlayMetadata.secondaryText.content;
-    }*/
+      //const title = short.shortsLockupViewModel.overlayMetadata.primaryText.content;
+      //const views = short.shortsLockupViewModel.overlayMetadata.secondaryText.content;
+    //}
 
     // lazy solution
     element.hidden = true;
@@ -143,12 +180,21 @@ function extractElementData(i, j, element) {
       const uploadYear = getActualUploadYear(itemsData[k].videoRenderer.publishedTimeText.simpleText);
       const watched = itemsData[k].videoRenderer.isWatched || false;
 
-      let type = duration > 60*3 ? "videos" : "shorts";
+      let type = "videos";
+
+      for (const overlay of itemsData[k].videoRenderer.thumbnailOverlays) {
+        if (overlay.thumbnailOverlayTimeStatusRenderer !== undefined) {
+          if (overlay.thumbnailOverlayTimeStatusRenderer.style === "SHORTS") {
+            type = "shorts";
+          }
+        }
+      }
+
       if (itemsData[k].videoRenderer.publishedTimeText.simpleText.split(" ")[0] === "Streamed") {
         type = "live";
       }
 
-      data.set(title, { element: element, type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
+      data.set(title, { element: item, type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
       checkElement(data.get(title));
       k++;
     }
@@ -167,36 +213,14 @@ function extractElementData(i, j, element) {
     data.set(title, { element: element, type: type, title: title, duration: duration, views: views, uploadYear: uploadYear, watched: watched, curated: curated, hidden: false });
     checkElement(data.get(title));
   }
-}
 
-const filterSettings = { // updates when the user changes the filters
-  "videos": true, // setting everything to false could be a good way to test this in the future as some things are slipping through
-  "shorts": true,
-  "playlists": true,
-  "channels": true,
-  "live": true,
-  //?"podcast": true?
-  //?"song": true?
-
-  minDuration: undefined,
-  maxDuration: undefined,
-
-  minViews: undefined,
-  maxViews: undefined,
-
-  minUploadYear: undefined,
-  maxUploadYear: undefined,
-
-  keywords: [/*"UI", "short"*/],
-
-  sortBy: "default", // default, date, duration, views // idk how im gonna implement this yet
-
-  show: "all", // all, watched, unwatched
-  curated: true, // people also watched, explore more, ...
-  //"sponsored": ?
+  //console.log(data);
 }
 
 function checkElement(elementData) {
+  //console.log("checking: ", elementData);
+  //console.log(elementData.curated, elementData.element);
+
   elementData.hidden = false;
 
   // need to make sure I'm accounting for all the undefined stuff that could happen
@@ -204,72 +228,80 @@ function checkElement(elementData) {
   // type
   if (!filterSettings[elementData.type]) {
     elementData.hidden = true;
-    console.log("type not included");
+    //console.log("type not included");
+  }
 
   // duration
-  } else if (elementData.duration < filterSettings.minDuration) {
+  else if (elementData.duration < filterSettings.minDuration) {
     elementData.hidden = true;
-    console.log("was too short");
+    //console.log("was too short");
   } else if (elementData.duration > filterSettings.maxDuration) {
     elementData.hidden = true;
-    console.log("was too long");
+    //console.log("was too long");
+  }
 
   // views
-  } else if (elementData.views < filterSettings.minViews) {
+  else if (elementData.views < filterSettings.minViews) {
     elementData.hidden = true;
-    console.log("didn't have enough views");
+    //console.log("not enough views");
   } else if (elementData.views > filterSettings.maxViews) {
     elementData.hidden = true;
-    console.log("had too many views");
+    //console.log("had too many views");
+  }
 
   // upload year
-  } else if (elementData.uploadYear < filterSettings.minUploadYear) {
+  else if (elementData.uploadYear < filterSettings.minUploadYear) {
     elementData.hidden = true;
-    console.log("uploaded too long ago");
+    //console.log("uploaded too long ago");
   } else if (elementData.uploadYear > filterSettings.maxUploadYear) {
     elementData.hidden = true;
-    console.log("uploaded too recently");
+    //console.log("uploaded too recently");
+  }
 
   // all/watched/unwatched
-  } else if (elementData.watched && filterSettings.show === "unwatched") {
+  else if (elementData.watched && filterSettings.show === "unwatched") {
     elementData.hidden = true;
-    console.log("hiding because you've seen this");
+    //console.log("hiding because you've seen this");
   } else if (elementData.watched === false && filterSettings.show === "watched") {
     elementData.hidden = true;
-    console.log("hiding because you haven't seen this");
+    //console.log("hiding because you haven't seen this");
   }
 
   // sections like "people also watched" or "explore more"
   else if (elementData.curated && !filterSettings.curated) {
     elementData.hidden = true;
-
-    const parentContainer = elementData.element.parentElement.parentElement.parentElement.parentElement.parentElement;
-    console.log(parentContainer);
-    if (!parentContainer.hidden) {
-      parentContainer.hidden = true;
-    }
-
-    console.log("hiding whole thing because curated content is disabled");
-
+  }
 
   // keywords (currently a video needs all keywords otherwise it is hidden)
   // I might make it less strict or add a setting for that
-  } else if (filterSettings.keywords[0] !== undefined) {
-    console.log("checking against keywords");
+  else if (filterSettings.keywords[0] !== undefined) {
+    //console.log("checking against keywords");
     for (let i = 0; i < filterSettings.keywords.length; i++) {
       if (!elementData.title.toLowerCase().includes(filterSettings.keywords[i].toLowerCase())) {
-        console.log("hiding because it didn't have keywords");
-        console.log(elementData.title, filterSettings.keywords[i]);
+        //console.log("hiding because it didn't have keywords");
+        //console.log(elementData.title, filterSettings.keywords[i]);
         elementData.hidden = true;
       }
     }
   }
 
-  // after checking everything the else would be false,
-  // allowing videos to be unhidden as filters change
-
   // hide or unhide videos
   elementData.element.hidden = elementData.hidden;
+
+  // hide or unhide the full curated sections
+  if (elementData.curated) {
+    const mainParentContainer = elementData.element.parentElement.parentElement.parentElement.parentElement.parentElement;
+    const firstParentContainer = elementData.element.parentElement;
+
+    let shouldIHideTheContainer = true;
+
+    for (const element of firstParentContainer.children) {
+      if (!element.hidden) {
+        shouldIHideTheContainer = false;
+      }
+    }
+    mainParentContainer.hidden = shouldIHideTheContainer;
+  }
 }
 
 function checkAllElements() {

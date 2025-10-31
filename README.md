@@ -49,3 +49,9 @@
   - [ ] duration unit selection???
   - [ ] view number formatting???
   - [ ] make it look good
+
+### Known Bugs:
+- [ ] need to handle resetting everything on new searches. I might reload but preferably I would just reset everything
+- [ ] the dropdowns cut off if there are no videos and it's loading (probably has to do with being inside of an element that just got shorter, or it could be the z-index)
+- [ ] probably a bunch more stuff
+
