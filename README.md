@@ -30,9 +30,8 @@
 	- [x] upload year
 	- [x] keywords
 	- [x] watched/unwatched/all
-	- [ ] curated (broken) (still need to hide the whole thing if all the videos are hidden based on other criteria)
-	- [ ] sponsored
-    - [x] Make sure that it can unhide videos as the filters change
+	- [x] curated
+	- [ ] sponsored?
 
 - [ ] a function or file that sorts all the videos as they load
 
@@ -46,12 +45,11 @@
 
 - [ ] Create actual UI
   - [ ] keyword addition and removal functionality
-  - [ ] duration unit selection???
-  - [ ] view number formatting???
+  - [ ] duration unit selection
   - [ ] make it look good
+  - [ ] view number formatting
 
-### Known Bugs:
+### Bugs:
 - [ ] need to handle resetting everything on new searches. I might reload but preferably I would just reset everything
 - [ ] the dropdowns cut off if there are no videos and it's loading (probably has to do with being inside of an element that just got shorter, or it could be the z-index)
 - [ ] probably a bunch more stuff
-
