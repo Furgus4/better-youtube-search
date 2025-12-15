@@ -1,3 +1,7 @@
+Because YouTube constantly changes, most of this is now broken.
+
+I don't really want to maintain this as it was just a simple project for learning purposes.
+
 ## Current UI iteration
 <img width="3399" height="1029" alt="attempt-3" src="https://github.com/user-attachments/assets/a460d617-867b-4319-8e45-5c6a78f7590c" />
 
